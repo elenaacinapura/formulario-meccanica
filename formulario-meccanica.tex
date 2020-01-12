@@ -18,14 +18,71 @@
 \setlength{\multicolsep}{1pt}
 \setlength{\columnsep}{2pt}
 
-\section{Trasformazioni di coordinate}
-    \subsection{Coordinate cilindriche}
-        provaa
-    \subsection{Coordinate sferiche}
+% vectors should appear with an underline
+\renewcommand{\vec}[1]{\underline{#1}}
+% useful command to write versors as "e" with ^ above them
+\newcommand{\e}[0]{\hat{e}}
+% useful command to write parial derivatives
+\newcommand{\de}[2]{\frac{\partial #1}{\partial #2}}
 
+\section{Trasformazioni di coordinate}
+    \subsection{Trasformazione generica}
+        Consideriamo una trasformazione di coordinate $T$ tale che 
+        $$ \begin{pmatrix}
+            x\\
+            y\\
+            z\\
+        \end{pmatrix}
+        = 
+        \begin{pmatrix}
+            x(u,v,w)\\
+            y(u,v,w)\\
+            z(u,v,w)\\
+        \end{pmatrix}
+        = T \begin{pmatrix}
+            u\\ v\\ w\\
+            \end{pmatrix}
+        $$
+        allora per trovare ad esempio il versore $\e_u$ fissi $v$ e $w$ e ottieni una curva al variare del parametro $u$. Allora 
+        $$ \e_u = \frac{\vec{t}_u}{\norm{\vec{t}_u}} \quad \text{con} \quad \vec{t}_u = \frac{\partial T}{\partial u} \cdot \begin{pmatrix} \hat{e}_x\\ \hat{e}_y \\ \hat{e}_z \end{pmatrix} = \de{x}{u} \e_x + \de{y}{u} \e_y + \de{z}{u} \e_z$$
+        In sostanza puoi scrivere lo Jacobiano $J$ della trasformazione (derivate rispetto alla stessa variabile sulla stessa riga) e ottenere
+        $$ \text{da normalizzare}\longrightarrow \begin{pmatrix}
+            \e_u\\ \e_v\\ \e_w
+        \end{pmatrix} = J^T
+        \begin{pmatrix}
+            \e_x \\\e_y\\\e_z
+        \end{pmatrix}$$
+    \subsection{Coordinate cilindriche}
+        Siano $r$ distanza all'origine della proiezione del punto sul piano $xy$; $\theta \in [0, 2\pi)$ angolo tra $r$ e l'asse $x$; $z$ solita $z$.
+        $$ \begin{cases}
+            x = r \cos \theta \\
+            y = r \sin \theta \\
+            z = z
+        \end{cases}$$
+        $$\begin{pmatrix} \e_r \\ \e_\theta \\ \e_z \end{pmatrix} = 
+            \begin{pmatrix}
+                \cos \theta & \sin \theta & 0 \\
+                -\sin \theta & \cos \theta & 0 \\
+                0 & 0 & 1
+            \end{pmatrix}
+        \begin{pmatrix} \e_x \\\e_y \\\e_z \end{pmatrix}$$
+    \subsection{Coordinate sferiche}
+        Siano $r$ distanza dall'origine; $\theta \in [0,\pi]$ angolo tra $r$ e l'asse $z$; $\phi \in [0, 2\pi)$ angolo tra l'asse $x$ e la proiezione di $r$ sul piano $xy$, ovvero $r \sin \theta$.
+        $$\begin{cases}
+            x = r \sin \theta \cos \phi \\
+            y = r \sin \theta \sin \phi \\
+            z = r \cos \theta
+        \end{cases}$$
+        $$\begin{pmatrix} \e_r \\ \e_\theta \\ \e_\phi \end{pmatrix} = 
+        \begin{pmatrix}
+            \sin \theta \cos \phi & \sin \theta \sin \phi & \cos \theta \\
+            \cos \theta \cos \phi & \cos \theta \sin \phi & -\sin \theta \\
+            - \sin \phi & \cos \phi & 0
+        \end{pmatrix}
+        \begin{pmatrix} \e_x \\\e_y \\\e_z \end{pmatrix}$$
     \subsection{Coordinate toroidali}
 
-    \subsection{Trasformazione generica}
+    
 
 
 \end{multicols}
