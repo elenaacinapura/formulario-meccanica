@@ -24,6 +24,16 @@
 \newcommand{\e}[0]{\hat{e}}
 % useful command to write parial derivatives
 \newcommand{\de}[2]{\frac{\partial #1}{\partial #2}}
+% useful command to write total derivative in time (very common in mechanics)
+\newcommand{\ddt}[0]{\frac{\dif}{\dif t}}
+% useful command to write the reference frame "I" in nice math italic
+\newcommand{\I}[0]{\mathcal{I}}
+% useful commando to display the L of the lagrangian and hamiltonian functions in nice italic 
+\newcommand{\Lag}[0]{\mathcal{L}}
+\newcommand{\Ham}[0]{\mathcal{H}}
+
+\newcommand{\dipdue}[0]{(t, q^k)}
+\newcommand{\diptre}[0]{(t, q^k, \dot q ^k)}
 
 \section{Trasformazioni di coordinate}
     \subsection{Trasformazione generica}
@@ -66,6 +76,15 @@
                 0 & 0 & 1
             \end{pmatrix}
         \begin{pmatrix} \e_x \\\e_y \\\e_z \end{pmatrix}$$
+        Derivazione dei versori, velocità e accelerazione in coordinate cilindriche (rispetto a sist. rif. inerziale):
+        $$ \begin{cases}
+            \dot{\e}_r = \dot{\theta} \e_\theta\\
+            \dot{\e}_\theta = -\dot{\theta} \e_r\\
+            \dot{\e}_z = 0
+        \end{cases}$$
+        $$ \vec{x}_P = r\e_r + z\e_z$$
+        $$ \vec{v}_P = \dot{r} \e_r + r \dot{\theta} \e_\theta + \dot{z}\e_z$$
+        $$ \vec{a}_P = (\ddot{r} - r \dot{\theta}^2)\e_r + (2 \dot{\theta}\dot{r} + r\ddot{\theta})\e_\theta + \ddot{z} \e_z$$
     \subsection{Coordinate sferiche}
         Siano $r$ distanza dall'origine; $\theta \in [0,\pi]$ angolo tra $r$ e l'asse $z$; $\phi \in [0, 2\pi)$ angolo tra l'asse $x$ e la proiezione di $r$ sul piano $xy$, ovvero $r \sin \theta$.
         $$\begin{cases}
@@ -80,10 +99,142 @@
             - \sin \phi & \cos \phi & 0
         \end{pmatrix}
         \begin{pmatrix} \e_x \\\e_y \\\e_z \end{pmatrix}$$
+        Derivazione dei versori, posizione, velocità e accelerazione in coordinate sferiche:
+            $$\begin{cases}
+                \dot{\e}_r = \dot{\theta}\e_\theta + \dot{\phi}\sin\theta \e_\phi\\
+                \dot{\e}_\theta = -\dot{\theta}\e_r + \dot{\phi}\cos \theta \e_\phi\\
+                \dot{\e}_\phi = -\dot{\phi}\sin \theta \e_r - \dot{\phi}\cos \theta \e_\theta
+            \end{cases}
+            $$
+            $$ \vec{x}_P = r\e_r$$
+            $$ \vec{v}_P = \dot{r} \e_r + r\dot{\theta}\e_\theta + r\dot{\phi}\sin \theta \e_\phi$$
+            $$ \vec{a}_P = (\ddot{r} - r\dot{\phi} - r\dot{\phi}^2 \sin^2 \theta )\e_r + (r\ddot{\theta} + 2\dot{r}\dot{\theta} - r\dot{\phi}^2 \cos \theta \sin \theta ) \e_\theta +$$ $$ + (r\sin\theta \ddot{\phi} + 2r \dot{\phi} \dot{\theta} \cos \theta  + 2 \dot{r} \dot{\phi} \sin \theta)\e_\phi $$
     \subsection{Coordinate toroidali}
-
+        Punto vincolato a muoversi su una superficie toroidale: sia $R$ la distanza (fissa) dal centro del toro al centro della sua sezione circolare, $r$ il raggio (fisso) della sezione del toro, $\theta \in [0, \pi]$ angolo tra $r$ e la verticale, $\phi \in [0, 2\pi)$ angolo tra $R$ e l'asse $x$. 
+        $$ \begin{cases}
+            x = (R + r \sin \theta) \cos \phi\\
+            y = (R + r \sin \theta) \sin \phi\\
+            z = r \cos \theta
+        \end{cases}$$ 
+        $$ \begin{pmatrix}
+            \e_r\\ \e_\theta \\ \e_\phi
+        \end{pmatrix} = 
+        \begin{pmatrix}
+            \sin \theta \cos \phi & \sin \theta \sin \phi & \cos \theta \\
+            \cos \theta \cos \phi & \cos \theta \sin \phi & -\sin \theta \\
+            - \sin \phi & \cos \phi & 0
+        \end{pmatrix} \begin{pmatrix} \e_x \\ \e_y \\ \e_z \end{pmatrix}$$
+        Derivazione dei versori, posizione, velocità e accelerazione:
+        $$ \begin{cases}
+            \dot{\e}_r = \dot{\theta} \e_\theta + \dot{\phi} \sin \theta \e_\phi\\
+            \dot{\e}_\theta = -\dot{\theta} \e_r + \dot{\phi} \cos \theta \e_\phi\\
+            \dot{\e}_\phi  = - \dot{\phi} \sin \theta \e_r - \dot{\phi}\cos \theta \e_\theta
+        \end{cases}$$
+        $$ \vec{x}_P = (r + R\sin \theta)\e_r + R\cos \theta \e_\theta$$
+        $$ \vec{v}_P = r \dot{\theta} \e_\theta + (R + r\sin \theta) \dot{\phi} \e_\phi$$
+        $$ \vec{a}_P =\big[-r \dot \theta ^2 - (R + r\sin \theta) \dot \phi ^2 \sin \theta \big] \e_r +$$ $$ + \big[r \ddot \theta - (R + r\sin \theta) \dot \phi ^2 \cos \theta \big]\e_\theta + $$ $$ + \big[2r \dot \theta \dot \phi \cos \theta + (R + r\sin \theta) \ddot \phi \big]\e_\phi$$
     
+\section{Velocità angolare e formula di Poisson}
+        Siano $\I$ e $\I'$ sist. rif. con basi ad essi solidali $\{\e_i\}$ e $\{\e_i'\}$
+    $$\vec{\omega}_{\I/\I'} = \frac 1 2 \sum_i \e_i \wedge \ddt_{\I'} \e_i'$$
+    $$ \ddt_\I \e_i' = \vec{\omega} \wedge \e_i$$
+    In cooridinate sferiche $$ \vec{\omega} = \dot \phi \cos \theta \e_r - \dot \phi \sin \theta \e_\theta + \dot \theta \e_\phi $$
 
+\section{Corpi rigidi}
+    \subsection{Momento della quantità di moto}
+    Sia $\beta$ corpo rigido e $A(t)$ punto generico.
+    $$ \vec{\mathcal{L}}_{A(t)\rvert{\I}}(t) := \int \limits_{P\in \beta} \big (P(t) - A(t) \big) \wedge {\vec{v}_P}_{\rvert \I}\dif m$$
+    \subsection{Operatore di inerzia}
+    Si definisce l'operatore di inerzia rispetto ad $A(t)$ del corpo $\beta$:
+        $$ I_{A(t)} : V_t \longrightarrow V_t$$
+        $$ \vec{I}_{A(t)}(\vec w) = \int \limits_{P \in \beta} \big( P- A\big) \wedge \big( \vec w \wedge (P-A)\big) \dif m$$
+    E allora risulta, detto $G$ centro di massa del corpo \\
+    - se $A$ coincide con un punto materiale di $\beta$:
+        $$ \vec{\mathcal{L}}_{A(t)\rvert{\I}}(t) = M_\beta \big(G - A \big) \wedge {\vec{v}_A}_{\rvert_\I} + \vec{I}_{A(t)}(\vec \omega _{\beta/\I})$$
+    - se $A$ è generico:
+        $$ \vec{\mathcal{L}}_{A(t)\rvert{\I}}(t) = M_\beta \big(G - A \big) \wedge {\vec{v}_G}_{\rvert_\I} + \vec{I}_{G(t)}(\vec \omega _{\beta/\I})$$
+    \subsection{Momento d'inerzia}
+    Si definisce momento d'inerzia del corpo rispetto a un asse di direzione $\hat u$ passante per $A$ lo scalare 
+    $$ I_{A, \hat u} := \hat u \cdot \vec{I}_A(\hat u)$$
+    \subsection{Matrice d'inerzia}
+    La matrice relativa all'operatore di inerzia è comoda se calcolata rispetto a un polo e una base $\{\e_i'\}$ solidali al corpo rigido, perché così non dipende più dal tempo, e risulta:
+        $$\{I'_A\}_{ij} := \e_i' \cdot \vec{I}_A(\e_j') = $$ 
+        $$ = \int \limits_{P \in \beta} \delta_{ij} \norm{P-A}^2 - (P-A)_i (P-A)_j \dif m$$
+    \subsection{Teorema di Steiner}
+    Sia $A$ punto solidale al corpo rigido. Data sempre una base solidale al corpo rigido, vale 
+        $$ \{I_A\}_{ij} = \{I_G\}_{ij} + M_\beta \bigg (\delta_{ij} \norm{G-A}^2 - (G-A)_i (G-A)_j \bigg)$$
+    \subsection{Energia cinetica di un corpo rigido}
+        $$T_{\beta/\I} = \frac 1 2 M_\beta \norm{{\vec v _G}_{\rvert_\I}}^2 + \frac 1 2 {\vec \omega}_{\beta/\I} \cdot \vec{I}_G(\vec{\omega}_{\beta/\I})$$
+    \subsection{II equazione cardinale del moto}
+        $$ {\ddt}_{\rvert_\I} {\vec{\mathcal{L}}_{A}}_{\rvert_\I} + m_\beta {\vec{v}_A}_{\rvert_\I} \wedge {\vec{v}_G}_{\rvert_A} = {\vec{M}^{ext}_A}_{\rvert_\I}$$
 
+\section{Meccanica Lagrangiana}
+    Abbiamo $N$ punti materiali $P_1,\dots, P_N$ e $n$ coordinate lagrangiane $q^1, \dots, q^n$. Da ora in poi è sott'inteso il sistema di riferimento.
+    \subsection{Condizione di idealità dei vincoli}
+        Detta $\vec \phi _i$ la risultante dei vincoli agenti sul punto $P_i$:
+        $$ \sum_{i=1}^N \vec{\phi}_i \cdot \de{\vec{x}_{P_i}}{q^k} = 0$$
+    \subsection{Equazioni del moto di Eulero-Lagrange}
+        Per $k = 1, \dots, n$
+        $$\ddt \bigg( \de{T}{\dot q ^k}\diptre \bigg)- \de{T}{q^k}\diptre = Q_k (t, q^k , \dot q^k)$$
+        $$ \text{con} \quad Q_k \diptre = \sum_{i=1}^N \vec F_i\cdot \de{\vec x_{P_i}}{q^k}$$
+        dove $\vec F_i$ è la risultate delle forze attive agenti sul punto $P_i$ (comprese quelle apparenti, se ci sono).
+    \subsection{Identità}
+        $$\de{\vec x_{P_i}}{q^k} = \de{\vec v_{P_i}}{\dot q^k}$$
+        $$ \ddt \bigg(\de{\vec x_{P_i}}{q^k}\bigg) = \de{\vec v_{P_i}}{q^k}$$
+    \subsection{Potenziale}
+        $U \diptre$ tale che $$ Q_k \diptre = \de{U}{q^k} - \ddt\de{U}{\dot q ^k} \quad k = 1,\dots,n$$
+        Condizioni necessarie: per ogni $k,r = 1,\dots, n$
+        $$ \de{Q_k}{\dot q^r} + \de{Q_r}{\dot q^k} = 0$$
+        $$\de{Q_k}{q^r} - \de{Q_r}{q^k} = \ddt \de{Q_k}{\dot q^r}$$
+        Il potenziale può dipendere solo \underline{linearmente} dalle $\dot q ^k$:
+        $$ U \diptre = U_0 \dipdue + \sum_{k=1}^n U_k \dipdue \dot q^k$$
+        e inoltre se le $Q_k$ non dipendono da una certa variabile, puoi provare a omettere la dipendenza da essa nel potenziale e vedere se tutto funziona.
+        \subsubsection{Potenziale delle forze apparenti}
+        Sia $\I$ sistema di riferiemento inerziale e $\I'$ generico. Nel sistema $\I'$ il potenziale dovuto alle forze apparenti vale
+        $$ U^{app} = T_\I - T_{\I'}$$
+    \subsection{Funzione lagrangiana}
+        $$ \Lag \diptre := T + U$$
+        $$ \ddt \de{\Lag}{\dot q^k} - \de{\Lag}{q^k} = 0$$
+    \subsection{Hamiltoniana}
+        $$ \Ham := \bigg(\sum_{k=1}^n \de{\Lag}{\dot q^k} \dot q^k \bigg) - \Lag = $$
+        $$ = T_2 - T_0 - U_0$$
+        Se $\Lag$ non dipende esplicitamente dal tempo, $\Ham$ si conserva lungo ogni moto.
+\section{Meccanica Hamiltoniana}
+    \subsection{Trasformazione di Legendre}
+        $$ \begin{cases}
+            t = t\\
+            q^k = q^k\\
+            p_k = \de{\Lag}{\dot q^k}
+        \end{cases}$$
+    \subsection{Equazioni di Hamilton}
+        $$ \begin{cases}
+            \frac{\dif t}{\dif t} = 1\\
+            \frac{\dif q^k}{\dif t} = \de{\Ham}{p_k}\\
+            \frac{\dif p_k}{\dif t} = - \de{\Ham}{q^k}
+        \end{cases}$$
+    \subsection{Forma differenziale di Poincaré-Cartan}
+        Il campo dinamico $\mathcal{Z}$ diventa 
+        $$ \mathcal{Z} = \de{}{t} + \sum_k \de{\Ham}{p_k} \de{}{q^k} - \de{\Ham}{q^k} \de{}{p_k}$$
+        Ed è univocamente determinato dalla forma differenziale di Poincaré-Cartan
+        $$ \dif \theta_H = -\Ham \dif t + \sum_i p_i \dif q^i$$
+    \subsection{Condizione di Lie}
+        Dico che un cambiamento di coordinate del tipo 
+        $$ \begin{cases}
+            t' = t\\
+            q'^k = q'^k (t, q^s, p_s)\\
+            p'_s = p'_s(t, q^s, p_s)
+        \end{cases}$$
+        soddisfa la condizione di Lie se nelle nuove coordinate
+        $$ \dif \theta_{\Ham'} = - \Ham' \dif t + \sum_i p'_i \dif q'^i + \dif F$$
+        e ciò implica che la struttura Hamiltoniana di $\mathcal{Z}$ è conservata. 
+        Se vale la condizione di Lie, allora ipotizzando $F = F(t, q^k, q'k)$
+        $$ \begin{cases}
+            \Ham' = \Ham + \de{F}{t}\\
+            p_i = \de{F}{q^i}\\
+            p'_i = - \de{F}{q'^i}
+        \end{cases}$$
+    \subsection{Equazione di Hamilton-Jacobi}
+        Vorrei trovare una trasformazione per cui $\Ham' = 0$ sempre, e quindi
+        $$ \Ham(t, q^k, \de{F}{q^k}) + \de{F}{t} = 0$$
 \end{multicols}
 \end{document}
