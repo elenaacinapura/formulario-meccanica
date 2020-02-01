@@ -1,4 +1,4 @@
-\documentclass[11pt,landscape]{article}
+\documentclass[11pt,landscape,a4paper]{article}
 
 \usepackage{packages}
 \input{document-setup}
@@ -25,13 +25,13 @@
 % useful command to write parial derivatives
 \newcommand{\de}[2]{\frac{\partial #1}{\partial #2}}
 % useful command to write total derivative in time (very common in mechanics)
-\newcommand{\ddt}[0]{\frac{\dif}{\dif t}}
+\newcommand{\ddt}[1]{\frac{\dif #1}{\dif t}}
 % useful command to write the reference frame "I" in nice math italic
 \newcommand{\I}[0]{\mathcal{I}}
-% useful commando to display the L of the lagrangian and hamiltonian functions in nice italic 
-\newcommand{\Lag}[0]{\mathcal{L}}
-\newcommand{\Ham}[0]{\mathcal{H}}
-
+% useful command to display the L and H of the lagrangian and hamiltonian functions in nice italic 
+\newcommand{\Lag}[0]{\mathscr{L}}
+\newcommand{\Ham}[0]{\mathscr{H}}
+% useful command to display the dipendencies of a function
 \newcommand{\dipdue}[0]{(t, q^k)}
 \newcommand{\diptre}[0]{(t, q^k, \dot q ^k)}
 
@@ -108,7 +108,7 @@
             $$
             $$ \vec{x}_P = r\e_r$$
             $$ \vec{v}_P = \dot{r} \e_r + r\dot{\theta}\e_\theta + r\dot{\phi}\sin \theta \e_\phi$$
-            $$ \vec{a}_P = (\ddot{r} - r\dot{\phi} - r\dot{\phi}^2 \sin^2 \theta )\e_r + (r\ddot{\theta} + 2\dot{r}\dot{\theta} - r\dot{\phi}^2 \cos \theta \sin \theta ) \e_\theta +$$ $$ + (r\sin\theta \ddot{\phi} + 2r \dot{\phi} \dot{\theta} \cos \theta  + 2 \dot{r} \dot{\phi} \sin \theta)\e_\phi $$
+            $$ \vec{a}_P = (\ddot{r} - r\dot{\theta}^2 - r\dot{\phi}^2 \sin^2 \theta )\e_r + (r\ddot{\theta} + 2\dot{r}\dot{\theta} - r\dot{\phi}^2 \cos \theta \sin \theta ) \e_\theta +$$ $$ + (r\sin\theta \ddot{\phi} + 2r \dot{\phi} \dot{\theta} \cos \theta  + 2 \dot{r} \dot{\phi} \sin \theta)\e_\phi $$
     \subsection{Coordinate toroidali}
         Punto vincolato a muoversi su una superficie toroidale: sia $R$ la distanza (fissa) dal centro del toro al centro della sua sezione circolare, $r$ il raggio (fisso) della sezione del toro, $\theta \in [0, \pi]$ angolo tra $r$ e la verticale, $\phi \in [0, 2\pi)$ angolo tra $R$ e l'asse $x$. 
         $$ \begin{cases}
@@ -136,8 +136,8 @@
     
 \section{Velocità angolare e formula di Poisson}
         Siano $\I$ e $\I'$ sist. rif. con basi ad essi solidali $\{\e_i\}$ e $\{\e_i'\}$
-    $$\vec{\omega}_{\I/\I'} = \frac 1 2 \sum_i \e_i \wedge \ddt_{\I'} \e_i'$$
-    $$ \ddt_\I \e_i' = \vec{\omega} \wedge \e_i$$
+    $$\vec{\omega}_{\I/\I'} = \frac 1 2 \sum_i \e_i' \wedge \ddt{}_{\I'} \e_i'$$
+    $$ \ddt{}_\I \e_i' = \vec{\omega} \wedge \e_i' $$
     In cooridinate sferiche $$ \vec{\omega} = \dot \phi \cos \theta \e_r - \dot \phi \sin \theta \e_\theta + \dot \theta \e_\phi $$
 
 \section{Corpi rigidi}
@@ -166,7 +166,7 @@
     \subsection{Energia cinetica di un corpo rigido}
         $$T_{\beta/\I} = \frac 1 2 M_\beta \norm{{\vec v _G}_{\rvert_\I}}^2 + \frac 1 2 {\vec \omega}_{\beta/\I} \cdot \vec{I}_G(\vec{\omega}_{\beta/\I})$$
     \subsection{II equazione cardinale del moto}
-        $$ {\ddt}_{\rvert_\I} {\vec{\mathcal{L}}_{A}}_{\rvert_\I} + m_\beta {\vec{v}_A}_{\rvert_\I} \wedge {\vec{v}_G}_{\rvert_A} = {\vec{M}^{ext}_A}_{\rvert_\I}$$
+        $$ {\ddt{}}_{\rvert_\I} {\vec{\mathcal{L}}_{A}}_{\rvert_\I} + m_\beta {\vec{v}_A}_{\rvert_\I} \wedge {\vec{v}_G}_{\rvert_A} = {\vec{M}^{ext}_A}_{\rvert_\I}$$
 
 \section{Meccanica Lagrangiana}
     Abbiamo $N$ punti materiali $P_1,\dots, P_N$ e $n$ coordinate lagrangiane $q^1, \dots, q^n$. Da ora in poi è sott'inteso il sistema di riferimento.
@@ -175,17 +175,17 @@
         $$ \sum_{i=1}^N \vec{\phi}_i \cdot \de{\vec{x}_{P_i}}{q^k} = 0$$
     \subsection{Equazioni del moto di Eulero-Lagrange}
         Per $k = 1, \dots, n$
-        $$\ddt \bigg( \de{T}{\dot q ^k}\diptre \bigg)- \de{T}{q^k}\diptre = Q_k (t, q^k , \dot q^k)$$
+        $$\ddt{}\bigg( \de{T}{\dot q ^k}\diptre \bigg)- \de{T}{q^k}\diptre = Q_k (t, q^k , \dot q^k)$$
         $$ \text{con} \quad Q_k \diptre = \sum_{i=1}^N \vec F_i\cdot \de{\vec x_{P_i}}{q^k}$$
         dove $\vec F_i$ è la risultate delle forze attive agenti sul punto $P_i$ (comprese quelle apparenti, se ci sono).
     \subsection{Identità}
         $$\de{\vec x_{P_i}}{q^k} = \de{\vec v_{P_i}}{\dot q^k}$$
-        $$ \ddt \bigg(\de{\vec x_{P_i}}{q^k}\bigg) = \de{\vec v_{P_i}}{q^k}$$
+        $$ \ddt{}\bigg(\de{\vec x_{P_i}}{q^k}\bigg) = \de{\vec v_{P_i}}{q^k}$$
     \subsection{Potenziale}
-        $U \diptre$ tale che $$ Q_k \diptre = \de{U}{q^k} - \ddt\de{U}{\dot q ^k} \quad k = 1,\dots,n$$
+        $U \diptre$ tale che $$ Q_k \diptre = \de{U}{q^k} - \ddt{}\de{U}{\dot q ^k} \quad k = 1,\dots,n$$
         Condizioni necessarie: per ogni $k,r = 1,\dots, n$
         $$ \de{Q_k}{\dot q^r} + \de{Q_r}{\dot q^k} = 0$$
-        $$\de{Q_k}{q^r} - \de{Q_r}{q^k} = \ddt \de{Q_k}{\dot q^r}$$
+        $$\de{Q_k}{q^r} - \de{Q_r}{q^k} = \ddt{}\de{Q_k}{\dot q^r}$$
         Il potenziale può dipendere solo \underline{linearmente} dalle $\dot q ^k$:
         $$ U \diptre = U_0 \dipdue + \sum_{k=1}^n U_k \dipdue \dot q^k$$
         e inoltre se le $Q_k$ non dipendono da una certa variabile, puoi provare a omettere la dipendenza da essa nel potenziale e vedere se tutto funziona.
@@ -194,11 +194,13 @@
         $$ U^{app} = T_\I - T_{\I'}$$
     \subsection{Funzione lagrangiana}
         $$ \Lag \diptre := T + U$$
-        $$ \ddt \de{\Lag}{\dot q^k} - \de{\Lag}{q^k} = 0$$
+        $$ \ddt{}\de{\Lag}{\dot q^k} - \de{\Lag}{q^k} = 0$$
     \subsection{Hamiltoniana}
         $$ \Ham := \bigg(\sum_{k=1}^n \de{\Lag}{\dot q^k} \dot q^k \bigg) - \Lag = $$
         $$ = T_2 - T_0 - U_0$$
-        Se $\Lag$ non dipende esplicitamente dal tempo, $\Ham$ si conserva lungo ogni moto.
+        Attenzione ai segni!!
+    \subsection{Quantità conservate}
+        Se $\Lag$ non dipende esplicitamente dal tempo, $\Ham$ si conserva lungo ogni moto. Se $\Lag$ non dipende da una $q^k$, allora si conserva lungo ogni moto la quantità $\de{\Lag}{\dot q^k}$.
 \section{Meccanica Hamiltoniana}
     \subsection{Trasformazione di Legendre}
         $$ \begin{cases}
@@ -208,9 +210,9 @@
         \end{cases}$$
     \subsection{Equazioni di Hamilton}
         $$ \begin{cases}
-            \frac{\dif t}{\dif t} = 1\\
-            \frac{\dif q^k}{\dif t} = \de{\Ham}{p_k}\\
-            \frac{\dif p_k}{\dif t} = - \de{\Ham}{q^k}
+            \ddt{t} = 1\\
+            \ddt{q^k} = \de{\Ham}{p_k}\\
+            \ddt{p_k} = - \de{\Ham}{q^k}
         \end{cases}$$
     \subsection{Forma differenziale di Poincaré-Cartan}
         Il campo dinamico $\mathcal{Z}$ diventa 
@@ -227,7 +229,7 @@
         soddisfa la condizione di Lie se nelle nuove coordinate
         $$ \dif \theta_{\Ham'} = - \Ham' \dif t + \sum_i p'_i \dif q'^i + \dif F$$
         e ciò implica che la struttura Hamiltoniana di $\mathcal{Z}$ è conservata. 
-        Se vale la condizione di Lie, allora ipotizzando $F = F(t, q^k, q'k)$
+        Se vale la condizione di Lie, allora ipotizzando $F = F(t, q^k, q'^k)$
         $$ \begin{cases}
             \Ham' = \Ham + \de{F}{t}\\
             p_i = \de{F}{q^i}\\
@@ -236,5 +238,7 @@
     \subsection{Equazione di Hamilton-Jacobi}
         Vorrei trovare una trasformazione per cui $\Ham' = 0$ sempre, e quindi
         $$ \Ham(t, q^k, \de{F}{q^k}) + \de{F}{t} = 0$$
+        Se $\Ham$ non dipende esplicitamente dal tempo, parti cercando 
+        $$ F(t, q^k, q'^k) = -q'^1 t + W(q^k,q'^2, \dots, q'^n)$$
 \end{multicols}
 \end{document}
